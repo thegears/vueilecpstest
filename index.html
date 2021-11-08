@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8' />
+		<title></title>
+		<!-- <script src='https://unpkg.com/vue@next'></script> -->
+		<script src='js/v3.2.8/vue.global.prod.js' type='text/javascript' charset='utf-8'></script>
+	</head>
+	<body>
+		<div id='app'>
+			<center>
+				<div v-if="end == true" id="second">
+					<h1 style="font-size: 120px;">{{value/10}} CPS</h1>
+					<button v-on:click="again" style="font-size: 250px;width:200px ;height: 75px;font-size: 35px;border: 5px solid black;" type="button">Try again</button>
+				</div>
+				<button v-if="end == false" v-on:click="increase" id="bt" type="button">{{value}}</button>
+			</center>
+		</div>
+		<script>
+			const App = {
+				data() {
+					return {
+						value : 0,
+						timer : 0,
+						interval : "",
+						end : false
+					}
+				},
+				methods:{
+					increase(){
+						if(this.value == 0){
+							var int = setInterval(()=>{
+								this.timer++;
+								if(this.timer == 10){
+									clearInterval(this.interval);
+									this.end = true;
+								}
+							},1000);					
+							this.interval = int;						
+						}
+						this.value ++;						
+					},
+					again(){
+						this.timer = 0;
+						this.value = 0;
+						clearInterval(this.interval);
+						this.interval = "";
+						this.end = false;
+					}
+				}
+			};
+			Vue.createApp(App).mount('#app');
+		</script>
+		<style type='text/css'>
+			body{
+				background-color: #465475;
+			}
+			button{
+				width: 100%;
+				height: 300px;
+				font-size: 200px;
+				background-color: #465475;
+				border: 3px solid black;
+				border-radius: 5px;
+			}
+		</style>
+	</body>
+</html>
